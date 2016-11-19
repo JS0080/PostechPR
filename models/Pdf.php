@@ -45,4 +45,21 @@ class Pdf extends \yii\db\ActiveRecord
             'report_id' => 'Report ID',
         ];
     }
+
+    public static function savePdf($report_id, $pdfs)
+    {
+        if (count($pdfs) == 0) {
+            return;
+        }
+
+        $subsql = "";
+        for ($i=0; $i < count($pdfs); $i++) {
+            $pdf = $pdfs[$i];
+            $subsql .= sprintf("('%s', '%s', %d),", $pdf['pdf_name'], $pdf['created_at'], $report_id);
+        }
+
+        $sql = "INSERT tbl_pdf (pdf_name, created_at, report_id) VALUES $subsql";
+         $sql = substr($sql, 0, -1);
+        Yii::$app->getDb()->createCommand($sql)->execute();
+    }
 }

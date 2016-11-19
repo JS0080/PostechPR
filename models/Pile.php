@@ -13,7 +13,7 @@ use Yii;
  * @property integer $depth_inch
  * @property integer $SLS_required_value
  * @property string $SLS_required_unit
- * @property integer $int
+ * @property integer $min_PSI
  * @property integer $PSI_actual
  * @property integer $torque
  * @property integer $SLS_achieved_value
@@ -37,7 +37,7 @@ class Pile extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['depth_foot', 'depth_inch', 'SLS_required_value', 'int', 'PSI_actual', 'torque', 'SLS_achieved_value', 'report_id'], 'integer'],
+            [['depth_foot', 'depth_inch', 'SLS_required_value', 'min_PSI', 'PSI_actual', 'torque', 'SLS_achieved_value', 'report_id'], 'integer'],
             [['model', 'SLS_required_unit', 'SLS_achieved_unit', 'notes'], 'string', 'max' => 255],
         ];
     }
@@ -54,7 +54,7 @@ class Pile extends \yii\db\ActiveRecord
             'depth_inch' => 'Depth Inch',
             'SLS_required_value' => 'Sls Required Value',
             'SLS_required_unit' => 'Sls Required Unit',
-            'int' => 'Int',
+            'min_PSI' => 'Min  Psi',
             'PSI_actual' => 'Psi Actual',
             'torque' => 'Torque',
             'SLS_achieved_value' => 'Sls Achieved Value',
@@ -62,5 +62,22 @@ class Pile extends \yii\db\ActiveRecord
             'notes' => 'Notes',
             'report_id' => 'Report ID',
         ];
+    }
+
+    public static function savePile($report_id, $piles)
+    {
+        if (count($piles) == 0) {
+            return;
+        }
+        
+        $subsql = "";
+        for ($i=0; $i < count($piles); $i++) {
+            $pile = $piles[$i];
+            $subsql .= sprintf("('%s', %d, %d, %d, '%s', %d, %d, %d, %d, '%s', '%s', %d),", $pile['pileModel'], $pile['depthFoot'], $pile['depthInch'], $pile['SLSRequiredValue'], $pile['SLSRequiredUint'], $pile['minPSI'], $pile['PSIActual'], $pile['torque'], $pile['SLSAchievedValue'], , $pile['SLSAchievedUnit'], $pile['pileNotes'], $report_id);
+        }
+
+        $sql = "INSERT tbl_pile (model, depth_foot, depth_inch, SLS_required_value, SLS_required_unit, min_PSI, PSI_actual, torque, SLS_achieved_value, SLS_achieved_unit, notes, report_id) VALUES $subsql";
+        $sql = substr($sql, 0, -1);
+        Yii::$app->getDb()->createCommand($sql)->execute();
     }
 }

@@ -51,4 +51,12 @@ class Report extends \yii\db\ActiveRecord
             'equipment' => 'Equipment',
         ];
     }
+
+    public static function saveReport($report)
+    {
+        $sql = sprintf("INSERT tbl_report (notes, customer, address, installer, install_date, equipment) ('%s', '%s', '%s', '%s', '%s', '%s')", $report['notes'], $report['customer'], $report['address'], $report['installer'], $report['install_date'], $report['equipment']);
+
+        Yii::$app->getDb()->createCommand($sql)->execute();
+        return Yii::$app->getDb()->getLastInsertID();
+    }
 }
