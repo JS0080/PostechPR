@@ -58,6 +58,13 @@ class SiteController extends Controller
         ];
     }
 
+    public function beforeAction($action) {
+        if ($action->id == 'save-report' || $action->id == 'saveReport') {
+            $this->enableCsrfValidation = false;
+        }
+        return parent::beforeAction($action);
+    }
+
     /**
      * Displays homepage.
      *
