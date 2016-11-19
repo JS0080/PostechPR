@@ -66,14 +66,14 @@ class Pile extends \yii\db\ActiveRecord
 
     public static function savePile($report_id, $piles)
     {
-        if (count($piles) == 0) {
+        if (count($piles) < 1) {
             return;
         }
-        
+
         $subsql = "";
         for ($i=0; $i < count($piles); $i++) {
             $pile = $piles[$i];
-            $subsql .= sprintf("('%s', %d, %d, %d, '%s', %d, %d, %d, %d, '%s', '%s', %d),", $pile['pileModel'], $pile['depthFoot'], $pile['depthInch'], $pile['SLSRequiredValue'], $pile['SLSRequiredUint'], $pile['minPSI'], $pile['PSIActual'], $pile['torque'], $pile['SLSAchievedValue'], , $pile['SLSAchievedUnit'], $pile['pileNotes'], $report_id);
+            $subsql .= sprintf("('%s', %d, %d, %d, '%s', %d, %d, %d, %d, '%s', '%s', %d),", $pile['pileModel'], $pile['depthFoot'], $pile['depthInch'], $pile['SLSRequiredValue'], $pile['SLSRequiredUint'], $pile['minPSI'], $pile['PSIActual'], $pile['torque'], $pile['SLSAchievedValue'], $pile['SLSAchievedUnit'], $pile['pileNotes'], $report_id);
         }
 
         $sql = "INSERT tbl_pile (model, depth_foot, depth_inch, SLS_required_value, SLS_required_unit, min_PSI, PSI_actual, torque, SLS_achieved_value, SLS_achieved_unit, notes, report_id) VALUES $subsql";

@@ -54,6 +54,10 @@ class Report extends \yii\db\ActiveRecord
 
     public static function saveReport($report)
     {
+        if (empty($report)) {
+            return;
+        }
+        
         $sql = sprintf("INSERT tbl_report (notes, customer, address, installer, install_date, equipment) ('%s', '%s', '%s', '%s', '%s', '%s')", $report['notes'], $report['customer'], $report['address'], $report['installer'], $report['install_date'], $report['equipment']);
 
         Yii::$app->getDb()->createCommand($sql)->execute();
