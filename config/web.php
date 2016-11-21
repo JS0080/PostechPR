@@ -9,14 +9,17 @@ $config = [
     'bootstrap' => ['log'],
 	'modules' => [
     'rbac' =>  [
-        'class' => 'johnitvn\rbacplus\Module'
-    ]       
+            'class' => 'johnitvn\rbacplus\Module'
+        ]       
 	],
     'components' => [
         'authManager' => [
-      	  'class' => 'yii\rbac\DbManager',
-    	],
-	'request' => [
+      	     'class' => 'yii\rbac\DbManager',
+    	   ],
+	   'request' => [
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ],
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => '5ytNyZnQVELtOGVxfAvz-qXGo9hYO54U',
         ],
@@ -47,14 +50,16 @@ $config = [
             ],
         ],
         'db' => require(__DIR__ . '/db.php'),
-        /*
+        
         'urlManager' => [
+            'class' => 'yii\web\UrlManager',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                ['class' => 'yii\rest\UrlRule', 'controller' => ['site']],
             ],
         ],
-        */
+        
     ],
     'params' => $params,
 ];

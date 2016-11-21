@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "186c5b5c1700febe7822ba8a8f9927ec",
-    "content-hash": "d4519bf4a6a9ae7cdb0c611e302b2144",
+    "hash": "884665606a379b46f799d9f5e7ef34de",
+    "content-hash": "31326b4f17fa050f22fd29f8d4c7c3f0",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -334,6 +334,55 @@
                 "markdown-extra"
             ],
             "time": "2016-09-14 20:40:20"
+        },
+        {
+            "name": "cranetm/yii2-json-rpc-2.0",
+            "version": "1.2.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cranetm/yii2-json-rpc-2.0.git",
+                "reference": "1fd3f25407bc1749d58cc0e50d9c4b39ead30a46"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cranetm/yii2-json-rpc-2.0/zipball/1fd3f25407bc1749d58cc0e50d9c4b39ead30a46",
+                "reference": "1fd3f25407bc1749d58cc0e50d9c4b39ead30a46",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0",
+                "yiisoft/yii2": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "JsonRpc2": "/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "tmudriy",
+                    "email": "tmudriy@gmail.com"
+                }
+            ],
+            "description": "JSON RPC 2.0 for Yii2 strict type validation of request and response data",
+            "keywords": [
+                "json",
+                "json-rpc",
+                "json-rpc-2.0",
+                "json-rpc2",
+                "jsonrpc",
+                "jsonrpc2",
+                "rpc",
+                "rpc2",
+                "yii",
+                "yii2"
+            ],
+            "time": "2016-07-09 12:23:51"
         },
         {
             "name": "ezyang/htmlpurifier",

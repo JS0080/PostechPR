@@ -11,9 +11,12 @@ use Yii;
  * @property string $notes
  * @property string $customer
  * @property string $address
+ * @property string $lat
+ * @property string $lng
  * @property string $installer
  * @property string $install_date
  * @property string $equipment
+ * @property string $engineer
  */
 class Report extends \yii\db\ActiveRecord
 {
@@ -32,7 +35,7 @@ class Report extends \yii\db\ActiveRecord
     {
         return [
             [['notes'], 'string'],
-            [['customer', 'address', 'installer', 'install_date', 'equipment'], 'string', 'max' => 255],
+            [['customer', 'address', 'lat', 'lng', 'installer', 'install_date', 'equipment', 'engineer'], 'string', 'max' => 255],
         ];
     }
 
@@ -46,21 +49,44 @@ class Report extends \yii\db\ActiveRecord
             'notes' => 'Notes',
             'customer' => 'Customer',
             'address' => 'Address',
+            'lat' => 'Lat',
+            'lng' => 'Lng',
             'installer' => 'Installer',
             'install_date' => 'Install Date',
             'equipment' => 'Equipment',
+            'engineer' => 'Engineer',
         ];
     }
 
-    public static function saveReport($report)
+     public static function saveReport($report)
     {
-        if (empty($report)) {
+        if (empty($report) || count($report) == 1) {
             return;
         }
         
-        $sql = sprintf("INSERT tbl_report (notes, customer, address, installer, install_date, equipment) ('%s', '%s', '%s', '%s', '%s', '%s')", $report['notes'], $report['customer'], $report['address'], $report['installer'], $report['install_date'], $report['equipment']);
+        $sql = sprintf("INSERT tbl_report (notes, customer, address, lat, lng, installer, install_date, equipment, engineer) VALUES ('%s', '%s', '%s',  '%s',  '%s', '%s', '%s', '%s', '%s')", $report['notes'], $report['customer'], $report['address'], $report['lat'], $report['lng'], $report['installer'], $report['installDate'], $report['equipment'], $report['engineer']);
 
         Yii::$app->getDb()->createCommand($sql)->execute();
         return Yii::$app->getDb()->getLastInsertID();
+    }
+
+    public static function findAllReports()
+    {
+        $sql = "SELECT * from tbl_report";
+        $reports = Yii::$app->getDb()->createCommand($sql)->queryAll();
+
+        $sql = "SELECT * from tbl_pile";
+        $piles = Yii::$app->getDb()->createCommand($sql)->queryAll();
+
+        for ($i=0; $i < count($reports); $i++) { 
+            $reports[$i]['piles'] = [];
+            for ($j=0; $j < count($piles); $j++) { 
+                if ($reports[$i]['Id'] == $piles[$j]['report_id']) {
+                    $reports[$i]['piles'][] = $piles[$j];
+                }
+            }
+        }
+
+        return $reports;
     }
 }

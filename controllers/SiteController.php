@@ -6,7 +6,6 @@ use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
-
 use app\models\Report;
 use app\models\Pile;
 use app\models\Photo;
@@ -65,6 +64,26 @@ class SiteController extends Controller
         return parent::beforeAction($action);
     }
 
+    public function actionSaveReport()
+    {
+        $report = Yii::$app->request->post('report');
+        
+        $report_id = Report::saveReport($report);
+        Pile::savePile($report_id, $report['pileModels']);
+        Photo::savePhoto($report_id, $report['photos']);
+        Pdf::savePdf($report_id, $report['pdfs']);
+
+        return json_encode(["status" => "ok"]);
+    }
+
+    public function actionFetchReports()
+    {
+        $reports = Report::findAllReports();
+
+        return json_encode(['status' => 'Ok', 'data' => $reports]);
+    }
+
+
     /**
      * Displays homepage.
      *
@@ -76,15 +95,7 @@ class SiteController extends Controller
 
     }
 	
-	public function actionSaveReport()
-    {
-        $report = Yii::$app->request->post('report');
-        $report_id = Report::saveReport($report);
-        Pile::savePile($report_id, $report['pileModels']);
-        Photo::savePhoto($report_id, $report['photos']);
-        Pdf::savePdf($report_id, $report['pdfs']);
-    }
-
+	
     /**
      * Login action.
      *
