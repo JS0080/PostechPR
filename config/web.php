@@ -51,14 +51,14 @@ $config = [
         ],
         'db' => require(__DIR__ . '/db.php'),
         
-        'urlManager' => [
+        /*'urlManager' => [
             'class' => 'yii\web\UrlManager',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
                 ['class' => 'yii\rest\UrlRule', 'controller' => ['site']],
             ],
-        ],
+        ],*/
         
     ],
     'params' => $params,
