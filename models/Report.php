@@ -78,11 +78,29 @@ class Report extends \yii\db\ActiveRecord
         $sql = "SELECT * from tbl_pile";
         $piles = Yii::$app->getDb()->createCommand($sql)->queryAll();
 
+        $sql = "SELECT * from tbl_photo";
+        $photos = Yii::$app->getDb()->createCommand($sql)->queryAll();
+
+        $sql = "SELECT * from tbl_pdf";
+        $pdfs = Yii::$app->getDb()->createCommand($sql)->queryAll();
+
         for ($i=0; $i < count($reports); $i++) { 
             $reports[$i]['piles'] = [];
             for ($j=0; $j < count($piles); $j++) { 
                 if ($reports[$i]['Id'] == $piles[$j]['report_id']) {
                     $reports[$i]['piles'][] = $piles[$j];
+                }
+            }
+
+            for ($j=0; $j < count($photos); $j++) { 
+                if ($reports[$i]['Id'] == $photos[$j]['report_id']) {
+                    $reports[$i]['photos'][] = $photos[$j];
+                }
+            }
+
+            for ($j=0; $j < count($pdfs); $j++) { 
+                if ($reports[$i]['Id'] == $pdfs[$j]['report_id']) {
+                    $reports[$i]['pdfs'][] = $pdfs[$j];
                 }
             }
         }

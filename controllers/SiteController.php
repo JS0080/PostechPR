@@ -80,8 +80,10 @@ class SiteController extends Controller
     public function actionFetchReports()
     {
         $reports = Report::findAllReports();
+        $result['status'] = 'ok';
+        $result['data'] = $reports;
 
-        return json_encode(['status' => 'Ok', 'data' => $reports]);
+        return json_encode($result);
     }
 
 
