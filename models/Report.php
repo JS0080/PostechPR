@@ -64,7 +64,7 @@ class Report extends \yii\db\ActiveRecord
             return;
         }
         
-        $sql = sprintf("INSERT tbl_report (notes, customer, address, lat, lng, installer, install_date, equipment, engineer) VALUES ('%s', '%s', '%s',  '%s',  '%s', '%s', '%s', '%s', '%s')", $report['notes'], $report['customer'], $report['address'], $report['lat'], $report['lng'], $report['installer'], $report['installDate'], $report['equipment'], $report['engineer']);
+        $sql = sprintf("INSERT tbl_report (notes, customer, address, lat, lng, installer, install_date, equipment, engineer, notes) VALUES ('%s', '%s', '%s',  '%s',  '%s', '%s', '%s', '%s', '%s', '%s')", $report['notes'], $report['customer'], $report['address'], $report['lat'], $report['lng'], $report['installer'], $report['installDate'], $report['equipment'], $report['engineer']. $report['notes']);
 
         Yii::$app->getDb()->createCommand($sql)->execute();
         return Yii::$app->getDb()->getLastInsertID();
